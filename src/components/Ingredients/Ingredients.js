@@ -5,6 +5,7 @@ import IngredientList from './IngredientList';
 import Search from './Search';
 
 const Ingredients = () => {
+  
 	const [userIngredients, setUserIngredients] = useState([]);
 	useEffect(() => {
 		fetch(
@@ -29,6 +30,11 @@ const Ingredients = () => {
   }, [userIngredients]); // verandert enkel bij verandering userIngredients
 
 	/* useEffect wordt uitgevoerd na het renderen van de component */
+
+  const filteredIngredientsHandler = filteredIngredients => {
+    setUserIngredients(filteredIngredients)
+  }
+
 	const addIngredientHandler = ingredient => {
 		fetch(
 			'https://react-learning-hooks-6c719-default-rtdb.europe-west1.firebasedatabase.app/ingredients.json',
@@ -61,7 +67,7 @@ const Ingredients = () => {
 			<IngredientForm onAddIngredient={addIngredientHandler} />
 
 			<section>
-				<Search />
+				<Search onLoadIngredients={filteredIngredientsHandler}/>
 				<IngredientList
 					ingredients={userIngredients}
 					onRemoveItem={removeIngredientHandler}
