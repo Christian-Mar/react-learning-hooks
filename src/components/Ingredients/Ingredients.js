@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
 
 const Ingredients = () => {
-  
+
 	const [userIngredients, setUserIngredients] = useState([]);
-	useEffect(() => {
+	
+  /*
+  useEffect(() => {
 		fetch(
 			'https://react-learning-hooks-6c719-default-rtdb.europe-west1.firebasedatabase.app/ingredients.json'
 		) //fetch
@@ -23,7 +25,7 @@ const Ingredients = () => {
 				}
 				setUserIngredients(loadedIngredients);
 			});
-	}, []); /* Zonder deze lege array komen we in een indefinite loop. Deze lege array geeft aan deze useEffect maar één keer mag gerendered worden. In de array kan een conditie gezet worden om aan te geven wanneerer kan gerendered worden. Leeg is hetzelfde als eenmaal, na de eerste render.  */
+	}, []);  Zonder deze lege array komen we in een indefinite loop. Deze lege array geeft aan deze useEffect maar één keer mag gerendered worden. In de array kan een conditie gezet worden om aan te geven wanneerer kan gerendered worden. Leeg is hetzelfde als eenmaal, na de eerste render.  */
 
   useEffect(() => {
     console.log('RENDERING INGREDIENTS', userIngredients);
@@ -31,9 +33,9 @@ const Ingredients = () => {
 
 	/* useEffect wordt uitgevoerd na het renderen van de component */
 
-  const filteredIngredientsHandler = filteredIngredients => {
-    setUserIngredients(filteredIngredients)
-  }
+  const filteredIngredientsHandler = useCallback(filteredIngredients => {
+    setUserIngredients(filteredIngredients);
+  }, []);
 
 	const addIngredientHandler = ingredient => {
 		fetch(
