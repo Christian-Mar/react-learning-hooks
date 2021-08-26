@@ -23,7 +23,7 @@ const httpReducer = (curHttpState, action) => {
     case 'SEND':
       return { loading: true, error: null };
     case 'RESPONSE':
-      return { ...httpState, loading: false };
+      return { ...curHttpState, loading: false };
     case 'ERROR':
       return { loading: false, error: action.errorMessage };
     case 'CLEAR':
